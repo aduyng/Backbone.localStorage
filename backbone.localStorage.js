@@ -66,6 +66,9 @@ _.extend(Backbone.LocalStorage.prototype, {
 
   // Return the array of all models currently in storage.
   findAll: function() {
+    //reset the this.records to avoid working on the old data
+    this.records = this.localStorage().getItem(this.name).split(',');
+
     return _(this.records).chain()
         .map(function(id){return JSON.parse(this.localStorage().getItem(this.name+"-"+id));}, this)
         .compact()
